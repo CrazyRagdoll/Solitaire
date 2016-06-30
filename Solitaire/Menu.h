@@ -1,11 +1,13 @@
 #pragma once
+
+#include <iostream>
+using namespace std;
+
 class Menu
 {
 public:
 	Menu(); //Constructor 
 	~Menu(); //Deconstructor
-
-private:
 
 	void openMenu();
 	void closeMenu();
@@ -17,6 +19,9 @@ private:
 	void openSettings();	//Opens the settings menu
 	void openStatistics();	//Opens the player's statistics 
 	void openCredits();		//Yeah...
+
+private:
+
 
 };
 
