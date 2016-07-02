@@ -202,7 +202,7 @@ void Game::createDeckList() //Creates a vector of decks to access them easily.
 	for (int i = 0; i < 8; i++)
 	{
 		_downDecks.emplace_back(i, "down");				// the first "down" deck is the main deck.
-		if (i != 0) { _upDecks.emplace_back(i, "up"); } //this is the one that will be used to create
+		_upDecks.emplace_back(i, "up");  //this is the one that will be used to create
 	}													//a list of cards.
 	for (int i = 0; i < 4; i++)
 	{
@@ -218,12 +218,31 @@ void Game::createDeckList() //Creates a vector of decks to access them easily.
 	//Display its cards
 	_downDecks[0].displayDeck(0);
 
-	//Update all of the "down" decks (1-8)
+	//Update all of the Decks
 	for (int i = 1; i < 8; i++)
 	{
-		_downDecks[i].addFromDeck(_downDecks[0], i - 1);
+		for (int j = 1; j < 8; j++)
+		{
+			if (i == j)
+			{
+				_upDecks[i].addFromDeck(_downDecks[0], 1);
+				_downDecks[0]._deck.pop_back();
+			}
+			if (i > j)
+			{
+				_downDecks[i].addFromDeck(_downDecks[0], 1);
+				_downDecks[0]._deck.pop_back();
+			}
+		}
+	}
+
+	for (int i = 0; i < _downDecks.size(); i++)
+	{
 		_downDecks[i].displayDeck(i);
-		for (int j = 1; j < i; j++) { _downDecks[0]._deck.pop_back(); }
+	}
+	for (int i = 0; i < _upDecks.size(); i++)
+	{
+		_upDecks[i].displayDeck(i);
 	}
 
 	_downDecks[0].displayDeck(0);
