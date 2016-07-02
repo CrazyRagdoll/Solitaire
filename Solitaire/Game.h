@@ -35,8 +35,8 @@ private:
 	void drawObjects();		//draw the cards and buttons
 
 	Menu _menu;
-	Deck _deck, _deck2, _deck3, _deck4, _deck5, _deck6, _deck7;
-	vector<Deck> _decks;
+			
+	vector<Deck> _downDecks, _upDecks, _endDecks;	//Face up and face down decks
 
 	//Game Functions
 	void createDeckList();	//Creates a vector of decks to access them easily.

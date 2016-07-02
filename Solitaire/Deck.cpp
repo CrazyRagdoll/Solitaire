@@ -1,12 +1,23 @@
 #include "Deck.h"
 #include <iostream>
+#include <algorithm>
 
 
-
-Deck::Deck()
+Deck::Deck(int id, string name)
 {
-}
+	_deckId = id;
+	_deckName = name;
 
+	//Set the type of deck to up or down.
+	if (name.c_str() == "up") {
+		_deckType = DeckType::UP;
+		_deckName = "Up";
+	}
+	else {
+		_deckType = DeckType::DOWN;
+		_deckName = "Down";
+	}
+}
 
 Deck::~Deck()
 {
@@ -45,11 +56,12 @@ void Deck::randomiseDeck() //Randomise the deck
 //Debugging tool to display each card in the deck
 void Deck::displayDeck(int id)
 {
-	cout << "Displaying Deck" << id << "..." << endl;
+	cout << "Displaying " << _deckName << " Deck " << id << "..." << endl;
 	for (int i = 0; i < _deck.size(); i++)
 	{
 		std::cout << "Card " << i+1 << ": The " << _deck[i].getCardValueName() << " of " << _deck[i].getCardSuitName() << "s." << std::endl;
 	}
+	if (_deck.size() == 0) cout << "Deck Empty." << endl;
 }
 
 void Deck::addFromDeck(Deck deck, int a)	//Add a card from another deck
