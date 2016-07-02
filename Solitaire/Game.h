@@ -1,6 +1,7 @@
 #pragma once
 
 #include "Menu.h"
+#include "Deck.h"
 
 //A set of strongly defined states which will determine the state of the game
 enum class GameState {MAIN_MENU, PLAY, PAUSED, GAME_OVER, EXIT};
@@ -34,6 +35,11 @@ private:
 	void drawObjects();		//draw the cards and buttons
 
 	Menu _menu;
+	Deck _deck, _deck2, _deck3, _deck4, _deck5, _deck6, _deck7;
+	vector<Deck> _decks;
+
+	//Game Functions
+	void createDeckList();	//Creates a vector of decks to access them easily.
 
 };
 

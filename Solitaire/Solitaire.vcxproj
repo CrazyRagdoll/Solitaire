@@ -110,14 +110,22 @@
     </Link>
   </ItemDefinitionGroup>
   <ItemGroup>
+    <ClCompile Include="Card.cpp" />
+    <ClCompile Include="Deck.cpp" />
     <ClCompile Include="Game.cpp" />
     <ClCompile Include="Main.cpp" />
     <ClCompile Include="Menu.cpp" />
+    <ClCompile Include="Suit.cpp" />
+    <ClCompile Include="Value.cpp" />
   </ItemGroup>
   <ItemGroup>
+    <ClInclude Include="Card.h" />
+    <ClInclude Include="Deck.h" />
     <ClInclude Include="Game.h" />
     <ClInclude Include="Menu.h" />
     <ClInclude Include="resource.h" />
+    <ClInclude Include="Suit.h" />
+    <ClInclude Include="Value.h" />
   </ItemGroup>
   <ItemGroup>
     <Image Include="..\Assets\Art\Playing Cards\PNG-cards-1.3\10_of_clubs.png" />

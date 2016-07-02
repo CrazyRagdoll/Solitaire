@@ -100,6 +100,24 @@ void Game::gameLoop() //The game loop which runs the game
 {
 	cout << "Starting Game loop..." << endl;
 
+	//Create a Vector of Decks!
+	createDeckList();
+	_decks.emplace_back(_deck);
+
+	_deck.generateDeck();
+	
+	_deck.randomiseDeck();
+	_deck.displayDeck(1);
+	
+	for (int i = 1; i < 7; i++)
+	{
+		_decks[i].addFromDeck(_deck, i);
+		_decks[i].displayDeck(i+1);
+		for (int j = 0; j < i; j++) { _deck._deck.pop_back(); }
+	}
+
+	_deck.displayDeck(1);
+
 	//Starting the play loop
 	while (_gameState == GameState::PLAY)
 	{
@@ -191,4 +209,15 @@ void Game::drawMainMenu() //draw the main menu buttons
 void Game::drawObjects() //draw the cards and buttons
 {
 
+}
+
+void Game::createDeckList() //Creates a vector of decks to access them easily.
+{
+	_decks.emplace_back(_deck);
+	_decks.emplace_back(_deck2);
+	_decks.emplace_back(_deck3);
+	_decks.emplace_back(_deck4);
+	_decks.emplace_back(_deck5);
+	_decks.emplace_back(_deck6);
+	_decks.emplace_back(_deck7);
 }
