@@ -9,7 +9,7 @@ Deck::Deck(int id, string name)
 	_deckName = name;
 
 	//Set the type of deck to up or down.
-	if (name.c_str() == "up") {
+	if (name == "up") {
 		_deckType = DeckType::UP;
 		_deckName = "Up";
 	}
@@ -54,9 +54,9 @@ void Deck::randomiseDeck() //Randomise the deck
 }
 
 //Debugging tool to display each card in the deck
-void Deck::displayDeck(int id)
+void Deck::displayDeck()
 {
-	cout << "Displaying " << _deckName << " Deck " << id << "..." << endl;
+	cout << "Displaying " << _deckName << " Deck " << _deckId << "..." << endl;
 	for (int i = 0; i < _deck.size(); i++)
 	{
 		std::cout << "Card " << i+1 << ": The " << _deck[i].getCardValueName() << " of " << _deck[i].getCardSuitName() << "s." << std::endl;
@@ -72,5 +72,34 @@ void Deck::addFromDeck(Deck deck, int a)	//Add a card from another deck
 		_card = deck._deck.back();	//Add them to the current deck
 		_deck.emplace_back(_card);
 		deck._deck.pop_back();		//This does not remove from the secondary deck
+	}
+}
+
+void Deck::displayLastXCards(int x)		//Display the last X amount of cards in the deck
+{
+	cout << _deck.size() << endl;
+	if (_deck.size() <= 0)
+	{
+		cout << "Deck Empty." << endl;
+	}
+	else if (_deck.size() <= x)
+	{
+		cout << "Displaying last " << _deck.size() << " cards in " << _deckName << " Deck " << _deckId << "..." << endl;
+		for (int i = 0; i < _deck.size(); i++)
+		{
+			std::cout << "Card " << i+1 << ": The "
+				<< _deck[i].getCardValueName() << " of "
+				<< _deck[i].getCardSuitName() << "s." << std::endl;
+		}
+	}
+	else if (_deck.size() >= x)
+	{
+		cout << "Displaying last " << x << " cards in " << _deckName << " Deck " << _deckId << "..." << endl;
+		for (int i = 0; i < x; i++)
+		{
+			std::cout << "Card " << _deck.size() - x + i + 1 << ": The "
+				<< _deck[_deck.size() - x + i].getCardValueName() << " of "
+				<< _deck[_deck.size() - x + i].getCardSuitName() << "s." << std::endl;
+		}
 	}
 }

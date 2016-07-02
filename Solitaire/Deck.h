@@ -11,7 +11,8 @@ public:
 
 	void generateDeck();			//Generate the deck from suits and cards
 	void randomiseDeck();			//Randomise the deck
-	void displayDeck(int id);		//Writes out all of the cards in the deck
+	void displayDeck();				//Writes out all of the cards in the deck
+	void displayLastXCards(int x);		//Display the last X amount of cards in the deck
 
 	void addFromDeck(Deck deck, int a);	//Add a card from another deck, how many cards
 

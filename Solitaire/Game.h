@@ -37,9 +37,12 @@ private:
 	Menu _menu;
 			
 	vector<Deck> _downDecks, _upDecks, _endDecks;	//Face up and face down decks
+	// _downDeck[0] will be the main deck (top right) that holds all of the cards.
+	// _upDeck[0] will be the pile of cards which are flipped from the main deck
 
 	//Game Functions
 	void createDeckList();	//Creates a vector of decks to access them easily.
+	void drawFromDeck();	//Draws the top 3 cards from the main deck pile
 
 };
 

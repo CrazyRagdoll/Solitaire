@@ -103,9 +103,21 @@ void Game::gameLoop() //The game loop which runs the game
 	//Create a Vector of all of the Decks!
 	createDeckList();
 
+	int _hello;
+
 	//Starting the play loop
 	while (_gameState == GameState::PLAY)
 	{
+
+		cin >> _hello;
+
+		if (_hello == 0) {
+			drawFromDeck();
+		}
+		else if (_hello == 1) {
+			_downDecks[0]._deck.pop_back();
+
+		}
 
 	}
 
@@ -177,7 +189,7 @@ void Game::checkGameState()	//Check the state of the game and change process acc
 		cout << endl;
 		cout << "Error: No correct gamestate, defaulted to main menu loop" << endl;
 		menuLoop();
-		break;
+break;
 	}
 }
 
@@ -202,7 +214,7 @@ void Game::createDeckList() //Creates a vector of decks to access them easily.
 	for (int i = 0; i < 8; i++)
 	{
 		_downDecks.emplace_back(i, "down");				// the first "down" deck is the main deck.
-		_upDecks.emplace_back(i, "up");  //this is the one that will be used to create
+		_upDecks.emplace_back(i, "up");					//this is the one that will be used to create
 	}													//a list of cards.
 	for (int i = 0; i < 4; i++)
 	{
@@ -216,7 +228,7 @@ void Game::createDeckList() //Creates a vector of decks to access them easily.
 	//_downDecks[0].randomiseDeck();
 
 	//Display its cards
-	_downDecks[0].displayDeck(0);
+	_downDecks[0].displayDeck();
 
 	//Update all of the Decks
 	for (int i = 1; i < 8; i++)
@@ -236,14 +248,55 @@ void Game::createDeckList() //Creates a vector of decks to access them easily.
 		}
 	}
 
+	//Display all of the decks.
 	for (int i = 0; i < _downDecks.size(); i++)
 	{
-		_downDecks[i].displayDeck(i);
+		_downDecks[i].displayDeck();
 	}
 	for (int i = 0; i < _upDecks.size(); i++)
 	{
-		_upDecks[i].displayDeck(i);
+		_upDecks[i].displayDeck();
 	}
 
-	_downDecks[0].displayDeck(0);
+	_downDecks[0].displayDeck();
+	_upDecks[0].displayDeck();
+}
+
+void Game::drawFromDeck()	//Draws the top 3 cards from the main deck pile
+{
+	int padding = 3;			//Need to pad the deck so you dont overdraw
+	int flipSize = 0;
+
+	//If there are no cards in the main deck you need to refill it for the next moves.
+	cout << "Main deck size: " << _downDecks[0]._deck.size() << endl;
+	cout << "Flip deck size: " << _upDecks[0]._deck.size() << endl;
+	if (_downDecks[0]._deck.size() == 0)
+	{
+		flipSize = _upDecks[0]._deck.size();
+		cout << "Refilling Deck... " << _upDecks[0]._deck.size() << " cards..." << endl;
+		for (int i = 0; i < flipSize; i++)
+		{
+			_downDecks[0]._deck.emplace_back(_upDecks[0]._deck.back());
+			_upDecks[0]._deck.pop_back();
+		}
+	}
+
+	//Calculate the padding
+	if (_downDecks[0]._deck.size() < 3)
+	{
+		cout << "Adding padding..." << endl;
+		padding = _downDecks[0]._deck.size();
+	}
+
+	//draw the cards from the main deck and put them in the fipped cards deck.
+	for (int i = 0; i < padding; i++) {
+		_upDecks[0]._deck.emplace_back(_downDecks[0]._deck.back());
+		_downDecks[0]._deck.pop_back();
+	}
+
+	//Display the last 3 cards in the deck.
+	_upDecks[0].displayLastXCards(3);
+	
+	//Display the contents of the filpped deck.
+	_upDecks[0].displayDeck();
 }
