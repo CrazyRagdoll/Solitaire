@@ -115,11 +115,18 @@ void Game::gameLoop() //The game loop which runs the game
 			drawFromDeck();
 		}
 		else if (_hello == 1) {
-			_downDecks[0]._deck.pop_back();
+			//_downDecks[0]._deck.pop_back();
 		}
 		else if (_hello == 2) {
 			bool _removeCard = addToEndDeck(_debugDeck[0]._deck.back());
 			if (_removeCard) { _debugDeck[0]._deck.pop_back(); }
+		}
+		else if (_hello == 3) {
+			_debugDeck[1].moveCardsFromDeck(_debugDeck[0], 5);
+		}
+		else if (_hello == 9) {
+			printDecks(_downDecks);
+			printDecks(_upDecks);
 			printDecks(_debugDeck);
 			printDecks(_endDecks);
 		}
@@ -223,34 +230,33 @@ void Game::createDeckList() //Creates a vector of decks to access them easily.
 	}													//a list of cards.
 	for (int i = 0; i < 4; i++)
 	{
-		_endDecks.emplace_back(i, "up");
+		_endDecks.emplace_back(i, "end");
 	}
 
 	//Update the main deck.
 	_downDecks[0].generateDeck();
 
 	//Randomise the main deck
-	_downDecks[0].randomiseDeck();
+	//_downDecks[0].randomiseDeck();
 
-	//Update all of the Decks
+	//Update all of the Decks, two loops to generate the playing field
 	for (int i = 1; i < 8; i++)
 	{
 		for (int j = 1; j < 8; j++)
 		{
 			if (i == j)
 			{
-				_upDecks[i].addFromDeck(_downDecks[0], 1);
-				_downDecks[0]._deck.pop_back();
+				_upDecks[i].moveCardsFromDeck(_downDecks[0], 1);
 			}
 			if (i > j)
 			{
-				_downDecks[i].addFromDeck(_downDecks[0], 1);
-				_downDecks[0]._deck.pop_back();
+				_downDecks[i].moveCardsFromDeck(_downDecks[0], 1);
 			}
 		}
 	}
 
 	_debugDeck.emplace_back(0, "debug");
+	_debugDeck.emplace_back(1, "debug");
 	_debugDeck[0].addCard(1, 4);
 	_debugDeck[0].addCard(1, 3);
 	_debugDeck[0].addCard(1, 2);
@@ -334,8 +340,8 @@ bool Game::addToEndDeck(Card card)	//Add a card to the final decks which once fi
 		}
 	}
 
-	//if there are no decks with cards already in them assign the card to a deck
-	//and the card is an ace.
+	/* If there are no decks with cards already in them assign the card to a deck
+	and the card is an ace.*/
 	for (int i = 0; i < 4; i++)
 	{
 		cout << "Suit & value: " << _suit << " " << _value << "." << endl;

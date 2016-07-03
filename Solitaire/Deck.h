@@ -14,7 +14,7 @@ public:
 	void displayDeck();				//Writes out all of the cards in the deck
 	void displayLastXCards(int x);		//Display the last X amount of cards in the deck
 
-	void addFromDeck(Deck deck, int a);	//Add a card from another deck, how many cards
+	void moveCardsFromDeck(Deck &deck, int num);	//Add a card from another deck, how many cards
 
 	void addCard(int a, int b);		//Add a specific card to a deck.
 

@@ -19,6 +19,11 @@ Deck::Deck(int id, string name)
 		_deckType = DeckType::UP;
 		_deckName = "Up";
 	}
+	else if (name == "end")
+	{
+		_deckType = DeckType::UP;
+		_deckName = "End";
+	}
 	else 
 	{
 		_deckType = DeckType::DOWN;
@@ -77,15 +82,20 @@ void Deck::displayDeck()
 	if (_deck.size() == 0) cout << "Deck Empty." << endl;
 }
 
-void Deck::addFromDeck(Deck deck, int a)	//Add a card from another deck
+//Move "num" amount of cards from the selected "deck" to the target _deck
+void Deck::moveCardsFromDeck(Deck &deck, int num)
 {
-	//For however many cards need to be moved (from the end of the deck)
-	for (int i = 0; i < a; i++)
+	vector<Deck> _tmpDeck;
+	_tmpDeck.emplace_back(0, "debug");
+	for (int i = 0; i < num; i++)
 	{
-		_card = deck._deck.back();	//Add them to the current deck
-		_deck.emplace_back(_card);
-		deck._deck.pop_back();		//This does not remove from the secondary deck
+		_card = deck._deck.back();
+		_tmpDeck[0]._deck.emplace_back(_card);
+		deck._deck.pop_back();
+		_deck.emplace_back(_tmpDeck[0]._deck.back());
+		_tmpDeck[0]._deck.pop_back();
 	}
+	_tmpDeck.clear();
 }
 
 void Deck::displayLastXCards(int x)		//Display the last X amount of cards in the deck
