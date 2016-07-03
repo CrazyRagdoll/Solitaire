@@ -116,7 +116,12 @@ void Game::gameLoop() //The game loop which runs the game
 		}
 		else if (_hello == 1) {
 			_downDecks[0]._deck.pop_back();
-
+		}
+		else if (_hello == 2) {
+			bool _removeCard = addToEndDeck(_debugDeck[0]._deck.back());
+			if (_removeCard) { _debugDeck[0]._deck.pop_back(); }
+			printDecks(_debugDeck);
+			printDecks(_endDecks);
 		}
 
 	}
@@ -218,17 +223,14 @@ void Game::createDeckList() //Creates a vector of decks to access them easily.
 	}													//a list of cards.
 	for (int i = 0; i < 4; i++)
 	{
-		_endDecks.emplace_back(i, "down");
+		_endDecks.emplace_back(i, "up");
 	}
 
 	//Update the main deck.
 	_downDecks[0].generateDeck();
 
 	//Randomise the main deck
-	//_downDecks[0].randomiseDeck();
-
-	//Display its cards
-	_downDecks[0].displayDeck();
+	_downDecks[0].randomiseDeck();
 
 	//Update all of the Decks
 	for (int i = 1; i < 8; i++)
@@ -248,18 +250,14 @@ void Game::createDeckList() //Creates a vector of decks to access them easily.
 		}
 	}
 
-	//Display all of the decks.
-	for (int i = 0; i < _downDecks.size(); i++)
-	{
-		_downDecks[i].displayDeck();
-	}
-	for (int i = 0; i < _upDecks.size(); i++)
-	{
-		_upDecks[i].displayDeck();
-	}
-
-	_downDecks[0].displayDeck();
-	_upDecks[0].displayDeck();
+	_debugDeck.emplace_back(0, "debug");
+	_debugDeck[0].addCard(1, 4);
+	_debugDeck[0].addCard(1, 3);
+	_debugDeck[0].addCard(1, 2);
+	_debugDeck[0].addCard(1, 1);
+	_debugDeck[0].addCard(2, 1);
+	_debugDeck[0].addCard(3, 1);
+	_debugDeck[0].addCard(4, 1);
 }
 
 void Game::drawFromDeck()	//Draws the top 3 cards from the main deck pile
@@ -297,6 +295,70 @@ void Game::drawFromDeck()	//Draws the top 3 cards from the main deck pile
 	//Display the last 3 cards in the deck.
 	_upDecks[0].displayLastXCards(3);
 	
-	//Display the contents of the filpped deck.
-	_upDecks[0].displayDeck();
+}
+
+bool Game::addToEndDeck(Card card)	//Add a card to the final decks which once filled end the game.
+{
+	//Check the suit and value of the card.
+	int _suit = card.getCardSuitValue();
+	int _value = card.getCardValueValue();
+
+	//An int to hold a win state value
+	int _GG = 0;
+
+	//Temp card to check value against
+	Card _tmpCard;
+
+	//If all of the end decks are full the game is won!
+	for (int i = 0; i < 4; i++)
+	{
+		if (_endDecks[i]._deck.size() == 13) { _GG++; }
+		if (_GG == 4) { _gameState = GameState::GAME_OVER; return false; }
+	}
+
+	//Check if any of the decks have any cards in them and check the suit + value
+	for (int i = 0; i < 4; i++)
+	{
+		if (_endDecks[i]._deck.size() != 0)
+		{
+			cout << "End deck " << i << " not empty..." << endl;
+			_tmpCard = _endDecks[i]._deck.back();
+			if (_tmpCard.getCardSuitValue() == _suit &&
+				_tmpCard.getCardValueValue() == _value -
+				1)
+			{
+				cout << "Valid card, pushing into end deck..." << endl;
+				_endDecks[i]._deck.emplace_back(card);
+				return true;
+			}
+		}
+	}
+
+	//if there are no decks with cards already in them assign the card to a deck
+	//and the card is an ace.
+	for (int i = 0; i < 4; i++)
+	{
+		cout << "Suit & value: " << _suit << " " << _value << "." << endl;
+		if (_endDecks[i]._deck.size() == 0)
+		{
+			cout << "End deck " << i << " empty..." << endl;
+			if (_value == 1)
+			{
+				cout << "Card is an Ace, pushing card into end deck..." << endl;
+				_endDecks[i]._deck.emplace_back(card);
+				return true;
+			}
+		}
+	}
+
+	return false;
+}
+
+void Game::printDecks(vector<Deck> deck) //Print all the decks!
+{
+	//Display all of the decks.
+	for (int i = 0; i < deck.size(); i++)
+	{
+		deck[i].displayDeck();
+	}
 }

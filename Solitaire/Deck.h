@@ -16,6 +16,8 @@ public:
 
 	void addFromDeck(Deck deck, int a);	//Add a card from another deck, how many cards
 
+	void addCard(int a, int b);		//Add a specific card to a deck.
+
 	std::vector<Card> _deck;		//The deck is a vector of cards, holding 52, one of each suit+value	
 
 	DeckType _deckType;				//enum class to seperate the differet types of decks

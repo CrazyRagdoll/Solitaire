@@ -9,11 +9,18 @@ Deck::Deck(int id, string name)
 	_deckName = name;
 
 	//Set the type of deck to up or down.
-	if (name == "up") {
+	if (name == "debug")
+	{
+		_deckType = DeckType::UP;
+		_deckName = "Debug";
+	}
+	else if (name == "up") 
+	{
 		_deckType = DeckType::UP;
 		_deckName = "Up";
 	}
-	else {
+	else 
+	{
 		_deckType = DeckType::DOWN;
 		_deckName = "Down";
 	}
@@ -21,6 +28,12 @@ Deck::Deck(int id, string name)
 
 Deck::~Deck()
 {
+}
+
+void Deck::addCard(int a, int b)		//Add a specific card to a deck.
+{
+	_card.generateCard(a, b);
+	_deck.emplace_back(_card);
 }
 
 void Deck::generateDeck() //Generate the deck from suits and cards

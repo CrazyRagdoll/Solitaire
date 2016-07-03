@@ -43,6 +43,12 @@ private:
 	//Game Functions
 	void createDeckList();	//Creates a vector of decks to access them easily.
 	void drawFromDeck();	//Draws the top 3 cards from the main deck pile
+	bool addToEndDeck(Card card);	//Add a card to the final decks which once filled end the game.
+
+
+	//Debug stuff
+	void printDecks(vector<Deck> deck); //Print all the decks!
+	vector<Deck> _debugDeck;
 
 };
 
